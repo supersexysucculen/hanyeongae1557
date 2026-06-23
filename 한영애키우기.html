@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한영애 키우기 — 신화가 될 운명</title>
+<style>
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── VARIABLES ── */
+:root{
+  --bg:#080815;--panel:#0f0f28;--panel2:#141438;--border:#222248;
+  --gold:#ffd740;--gold2:#ff9800;--text:#cccce8;--dim:#6060a0;
+  --ok:#00e676;--fail:#ff3d00;--purple:#7c4dff;--cyan:#18ffff;
+  --font:'Malgun Gothic','Apple SD Gothic Neo','NanumGothic',sans-serif;
+}
+
+html,body{min-height:100vh;background:var(--bg);color:var(--text);
+  font-family:var(--font);font-size:14px;line-height:1.45;}
+
+/* starfield bg */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 8% 12%,rgba(255,255,255,.25),transparent),
+    radial-gradient(1px 1px at 22% 68%,rgba(255,255,255,.18),transparent),
+    radial-gradient(1px 1px at 40% 8%,rgba(255,255,255,.22),transparent),
+    radial-gradient(1px 1px at 57% 44%,rgba(255,255,255,.16),transparent),
+    radial-gradient(1px 1px at 70% 82%,rgba(255,255,255,.20),transparent),
+    radial-gradient(1px 1px at 85% 28%,rgba(255,255,255,.18),transparent),
+    radial-gradient(1px 1px at 93% 60%,rgba(255,255,255,.22),transparent),
+    radial-gradient(1px 1px at 33% 90%,rgba(255,255,255,.16),transparent),
+    radial-gradient(1px 1px at 75% 5%,rgba(255,255,255,.20),transparent),
+    radial-gradient(1px 1px at 50% 55%,rgba(255,255,255,.14),transparent),
+    radial-gradient(1px 1px at 15% 40%,rgba(255,255,255,.18),transparent),
+    radial-gradient(1px 1px at 62% 72%,rgba(255,255,255,.22),transparent);}
+
+/* ── HEADER ── */
+.hdr{display:flex;align-items:center;padding:11px 18px;
+  background:rgba(12,12,34,.96);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:200;backdrop-filter:blur(8px);
+  gap:10px;flex-wrap:wrap;}
+.hdr-title{font-size:1.15rem;font-weight:900;letter-spacing:-.5px;
+  background:linear-gradient(90deg,#ffd740,#ff9800,#ff5722);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  white-space:nowrap;}
+.hdr-gold{font-size:1rem;font-weight:700;color:var(--gold);
+  display:flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.btn-reset{margin-left:auto;background:transparent;border:1px solid #252550;
+  color:#404068;font-size:.7rem;padding:4px 10px;border-radius:6px;
+  cursor:pointer;font-family:var(--font);transition:color .2s,border-color .2s;}
+.btn-reset:hover{color:var(--fail);border-color:var(--fail);}
+
+/* ── APP / GRID ── */
+#app{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:14px 10px 60px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;}
+@media(max-width:560px){.grid{grid-template-columns:1fr;}}
+
+/* ── PANEL ── */
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:15px;}
+.ptitle{font-size:.7rem;font-weight:700;color:var(--dim);
+  text-transform:uppercase;letter-spacing:1.5px;margin-bottom:13px;}
+
+/* ── CHARACTER PANEL ── */
+.cpanel{display:flex;flex-direction:column;align-items:center;gap:11px;}
+.stage-badge{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;}
+.stag{font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px;
+  background:var(--purple);color:#fff;}
+.sname{font-size:1.05rem;font-weight:900;color:var(--gold);
+  text-shadow:0 0 12px rgba(255,215,64,.4);letter-spacing:-.3px;text-align:center;}
+
+/* ── CHARACTER FRAME ── */
+.cframe{position:relative;width:210px;height:280px;flex-shrink:0;overflow:visible;}
+
+/* behind: rays */
+.ov-rays{position:absolute;border-radius:50%;pointer-events:none;
+  z-index:1;opacity:0;transition:opacity .7s;
+  inset:-35px;}
+
+/* image clip */
+.cclip{position:absolute;inset:0;border-radius:14px;overflow:hidden;z-index:2;}
+.cimg{width:100%;height:100%;object-fit:cover;display:block;transition:filter .7s ease;}
+.cimg-fallback{width:100%;height:100%;
+  background:linear-gradient(135deg,#1a1a3e 0%,#2d1b69 50%,#1a1a3e 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:5rem;}
+
+/* inner overlays (clipped) */
+.ov-glow{position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:0;transition:opacity .7s;border-radius:14px;}
+.ov-pts{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;border-radius:14px;}
+
+/* outer overlays (not clipped) */
+.ov-ring{position:absolute;inset:0;border-radius:14px;z-index:3;
+  pointer-events:none;opacity:0;background:transparent;transition:opacity .7s,box-shadow .7s;}
+.ov-crown{position:absolute;top:-26px;left:50%;transform:translateX(-50%);
+  z-index:10;pointer-events:none;opacity:0;transition:opacity .5s;
+  font-size:0;line-height:1;text-align:center;white-space:nowrap;
+  filter:drop-shadow(0 0 8px gold);}
+.ov-godlabel{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  z-index:10;pointer-events:none;opacity:0;transition:opacity .5s;
+  font-size:0;font-weight:900;color:#fff;white-space:nowrap;letter-spacing:2px;
+  text-shadow:0 0 20px #ffd740,0 0 40px #ff9800;}
+
+/* ═══════════════════════════════════
+   TIER VISUAL RULES
+   ═══════════════════════════════════ */
+
+/* TIER 1 — stages 1-3: warm amber glow */
+.cframe[data-tier="1"] .cimg{filter:sepia(.12) brightness(1.02);}
+.cframe[data-tier="1"] .ov-glow{opacity:1;
+  background:radial-gradient(ellipse at 50% 85%,rgba(255,180,60,.28) 0%,transparent 65%);
+  animation:glow-breathe 3s ease-in-out infinite;}
+.cframe[data-tier="1"] .ov-ring{opacity:1;
+  box-shadow:0 0 0 1px rgba(255,200,80,.22),0 0 12px rgba(255,200,80,.15);}
+
+/* TIER 2 — stages 4-6: gold aura + crown */
+.cframe[data-tier="2"] .cimg{filter:brightness(1.06) saturate(1.1);}
+.cframe[data-tier="2"] .ov-glow{opacity:1;
+  background:radial-gradient(ellipse at 50% 60%,rgba(255,215,0,.3) 0%,rgba(255,165,0,.1) 55%,transparent 75%);
+  animation:glow-breathe 2.2s ease-in-out infinite;}
+.cframe[data-tier="2"] .ov-ring{opacity:1;animation:ring-gold 2.2s ease-in-out infinite;
+  box-shadow:0 0 0 2px rgba(255,215,0,.45),0 0 18px rgba(255,215,0,.35),0 0 36px rgba(255,165,0,.18);}
+.cframe[data-tier="2"] .ov-crown{opacity:1;font-size:1.9rem;animation:crown-float 2.5s ease-in-out infinite;}
+
+/* TIER 3 — stages 7-9: holy rays + halo */
+.cframe[data-tier="3"] .cimg{filter:brightness(1.1) saturate(1.2) contrast(1.05);}
+.cframe[data-tier="3"] .ov-glow{opacity:1;
+  background:radial-gradient(ellipse at 50% 40%,rgba(255,255,180,.35) 0%,rgba(255,215,0,.2) 40%,transparent 70%);
+  animation:glow-breathe 1.8s ease-in-out infinite;}
+.cframe[data-tier="3"] .ov-ring{opacity:1;animation:ring-gold 1.8s ease-in-out infinite;
+  box-shadow:0 0 0 2px rgba(255,230,0,.6),0 0 28px rgba(255,215,0,.5),0 0 55px rgba(255,200,0,.25);}
+.cframe[data-tier="3"] .ov-rays{opacity:1;
+  background:repeating-conic-gradient(rgba(255,240,100,.18) 0deg,transparent 8deg,rgba(255,240,100,.1) 16deg,transparent 24deg);
+  animation:rays-spin 10s linear infinite;}
+.cframe[data-tier="3"] .ov-crown{opacity:1;font-size:2.3rem;top:-28px;animation:crown-float 2s ease-in-out infinite;}
+
+/* TIER 4 — stages 10-12: cosmic divine */
+.cframe[data-tier="4"] .cimg{filter:brightness(1.15) saturate(1.35) contrast(1.1);}
+.cframe[data-tier="4"] .ov-glow{opacity:1;
+  background:radial-gradient(ellipse at 50% 50%,rgba(180,120,255,.35) 0%,rgba(255,215,0,.22) 35%,rgba(100,80,255,.15) 60%,transparent 82%);
+  animation:glow-cosmic 1.5s ease-in-out infinite;}
+.cframe[data-tier="4"] .ov-ring{opacity:1;animation:ring-cosmic 1.5s ease-in-out infinite;
+  box-shadow:0 0 0 2px rgba(180,120,255,.7),0 0 24px rgba(180,120,255,.5),0 0 50px rgba(255,215,0,.3),0 0 80px rgba(120,80,255,.18);}
+.cframe[data-tier="4"] .ov-rays{opacity:1;inset:-45px;
+  background:repeating-conic-gradient(rgba(180,120,255,.22) 0deg,transparent 7deg,rgba(255,200,80,.15) 14deg,transparent 21deg);
+  animation:rays-spin 7s linear infinite;}
+.cframe[data-tier="4"] .ov-crown{opacity:1;font-size:2.6rem;top:-30px;animation:crown-divine 1.5s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px #b478ff) drop-shadow(0 0 24px #7c4dff);}
+
+/* TIER 5 — stage 13: galaxy */
+.cframe[data-tier="5"] .cimg{filter:brightness(1.2) saturate(1.4) contrast(1.12) hue-rotate(5deg);}
+.cframe[data-tier="5"] .ov-glow{opacity:1;
+  background:radial-gradient(ellipse at 50% 50%,rgba(80,40,255,.38) 0%,rgba(200,0,255,.25) 30%,rgba(0,100,255,.2) 55%,transparent 80%);
+  animation:glow-galaxy 1.2s ease-in-out infinite;}
+.cframe[data-tier="5"] .ov-ring{opacity:1;animation:ring-galaxy 1.2s ease-in-out infinite;
+  box-shadow:0 0 0 3px rgba(150,50,255,.8),0 0 28px rgba(150,50,255,.6),0 0 65px rgba(0,100,255,.4),0 0 110px rgba(200,0,255,.2);}
+.cframe[data-tier="5"] .ov-rays{opacity:1;inset:-55px;
+  background:repeating-conic-gradient(rgba(120,40,255,.28) 0deg,rgba(0,80,255,.2) 5deg,transparent 10deg,rgba(200,0,255,.25) 15deg,transparent 20deg);
+  animation:rays-spin 5s linear infinite;}
+.cframe[data-tier="5"] .ov-crown{opacity:1;font-size:2.8rem;top:-32px;animation:crown-divine 1.2s ease-in-out infinite;
+  filter:drop-shadow(0 0 16px #9c27b0) drop-shadow(0 0 32px #3f51b5);}
+
+/* TIER 6 — stage 14: transcendent */
+.cframe[data-tier="6"] .cimg{filter:brightness(1.3) saturate(1.6) contrast(1.15);}
+.cframe[data-tier="6"] .ov-glow{opacity:1;
+  background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.45) 0%,rgba(255,215,0,.35) 25%,rgba(255,100,200,.22) 50%,rgba(100,100,255,.18) 75%,transparent 90%);
+  animation:glow-transcend .9s ease-in-out infinite;}
+.cframe[data-tier="6"] .ov-ring{opacity:1;animation:ring-transcend .9s ease-in-out infinite;
+  box-shadow:0 0 0 3px rgba(255,255,255,.8),0 0 28px rgba(255,255,255,.6),0 0 65px rgba(255,215,0,.5),0 0 130px rgba(255,100,200,.3);}
+.cframe[data-tier="6"] .ov-rays{opacity:1;inset:-65px;
+  background:repeating-conic-gradient(rgba(255,255,200,.3) 0deg,rgba(255,200,255,.2) 5deg,transparent 10deg,rgba(200,255,255,.28) 15deg,transparent 20deg);
+  animation:rays-spin 4s linear infinite;}
+.cframe[data-tier="6"] .ov-crown{opacity:1;font-size:3rem;top:-34px;animation:crown-divine .9s ease-in-out infinite;
+  filter:drop-shadow(0 0 20px #fff) drop-shadow(0 0 40px #ffd740);}
+
+/* TIER 7 — stage 15: GOD MODE */
+.cframe[data-tier="7"] .cimg{animation:img-god 2s ease-in-out infinite;}
+.cframe[data-tier="7"] .ov-glow{opacity:1;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.55) 0%,rgba(255,215,0,.42) 20%,rgba(255,100,0,.32) 40%,rgba(255,0,200,.24) 60%,rgba(100,0,255,.18) 80%,transparent 100%);
+  animation:glow-god .65s ease-in-out infinite;}
+.cframe[data-tier="7"] .ov-ring{opacity:1;animation:ring-god .65s ease-in-out infinite;
+  box-shadow:0 0 0 4px rgba(255,255,255,.95),0 0 24px rgba(255,255,255,.9),0 0 55px rgba(255,215,0,.7),0 0 110px rgba(255,100,0,.5),0 0 190px rgba(255,0,150,.3);}
+.cframe[data-tier="7"] .ov-rays{opacity:1;inset:-85px;
+  background:repeating-conic-gradient(rgba(255,230,0,.38) 0deg,rgba(255,100,0,.28) 4deg,rgba(255,0,150,.32) 8deg,rgba(150,0,255,.28) 12deg,rgba(0,100,255,.32) 16deg,rgba(0,255,200,.28) 20deg,transparent 24deg);
+  animation:rays-spin 2.5s linear infinite;}
+.cframe[data-tier="7"] .ov-crown{opacity:1;font-size:3.5rem;top:-38px;animation:crown-god .65s ease-in-out infinite;
+  filter:drop-shadow(0 0 24px #fff) drop-shadow(0 0 48px #ffd740) drop-shadow(0 0 72px #ff6d00);}
+.cframe[data-tier="7"] .ov-godlabel{opacity:1;font-size:1.05rem;animation:godlabel 0.8s ease-in-out infinite;}
+
+/* ═══════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════ */
+@keyframes glow-breathe{0%,100%{opacity:.65}50%{opacity:1}}
+@keyframes glow-cosmic{0%,100%{opacity:.72;filter:hue-rotate(0deg)}50%{opacity:1;filter:hue-rotate(22deg)}}
+@keyframes glow-galaxy{0%,100%{opacity:.78;filter:hue-rotate(0deg)}33%{opacity:1;filter:hue-rotate(45deg)}66%{opacity:.88;filter:hue-rotate(90deg)}}
+@keyframes glow-transcend{0%,100%{opacity:.85}50%{opacity:1}}
+@keyframes glow-god{0%,100%{opacity:.88;filter:hue-rotate(0deg)}20%{filter:hue-rotate(30deg);opacity:1}40%{filter:hue-rotate(60deg)}60%{filter:hue-rotate(90deg);opacity:1}80%{filter:hue-rotate(120deg)}}
+@keyframes ring-gold{0%,100%{opacity:.88}50%{opacity:1}}
+@keyframes ring-cosmic{0%,100%{opacity:.88;filter:hue-rotate(0deg)}50%{opacity:1;filter:hue-rotate(28deg)}}
+@keyframes ring-galaxy{0%,100%{opacity:.9;filter:hue-rotate(0deg)}33%{opacity:1;filter:hue-rotate(60deg)}66%{filter:hue-rotate(120deg)}}
+@keyframes ring-transcend{0%,100%{opacity:.92}50%{opacity:1}}
+@keyframes ring-god{0%,100%{filter:hue-rotate(0deg)}25%{filter:hue-rotate(45deg)}50%{filter:hue-rotate(90deg)}75%{filter:hue-rotate(135deg)}}
+@keyframes rays-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes crown-float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-5px)}}
+@keyframes crown-divine{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-7px) scale(1.09)}}
+@keyframes crown-god{
+  0%,100%{transform:translateX(-50%) translateY(0) scale(1);filter:drop-shadow(0 0 24px #fff) drop-shadow(0 0 48px #ffd740) hue-rotate(0deg);}
+  25%{transform:translateX(-50%) translateY(-9px) scale(1.12);filter:drop-shadow(0 0 32px #ffd740) drop-shadow(0 0 60px #ff6d00) hue-rotate(40deg);}
+  50%{transform:translateX(-50%) translateY(-4px) scale(1.06);filter:drop-shadow(0 0 28px #ff6d00) drop-shadow(0 0 52px #ff0099) hue-rotate(80deg);}
+  75%{transform:translateX(-50%) translateY(-11px) scale(1.16);filter:drop-shadow(0 0 36px #ff0099) drop-shadow(0 0 65px #7c4dff) hue-rotate(120deg);}
+}
+@keyframes img-god{
+  0%,100%{filter:brightness(1.5) saturate(2) contrast(1.2) hue-rotate(0deg);}
+  33%{filter:brightness(1.65) saturate(2.3) contrast(1.25) hue-rotate(12deg);}
+  66%{filter:brightness(1.55) saturate(2.1) contrast(1.22) hue-rotate(6deg);}
+}
+@keyframes godlabel{
+  0%,100%{text-shadow:0 0 20px #ffd740,0 0 40px #ff9800;opacity:.92;}
+  50%{text-shadow:0 0 40px #ffd740,0 0 80px #ff9800,0 0 120px #ff3d00;opacity:1;}
+}
+@keyframes sparkle-up{
+  0%{transform:translateY(0) scale(.5);opacity:0;}
+  20%{opacity:1;transform:translateY(-10px) scale(1);}
+  80%{opacity:.65;}
+  100%{transform:translateY(-45px) scale(.2);opacity:0;}
+}
+@keyframes flash-ok{0%{box-shadow:0 0 0 0 rgba(0,230,118,.9)}100%{box-shadow:0 0 0 30px rgba(0,230,118,0)}}
+@keyframes flash-bad{0%{box-shadow:0 0 0 0 rgba(255,61,0,.9)}100%{box-shadow:0 0 0 28px rgba(255,61,0,0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+/* ── PROBABILITY BAR ── */
+.prob-box{width:100%;background:var(--panel2);border:1px solid var(--border);
+  border-radius:10px;padding:9px 12px;}
+.prob-row{display:flex;justify-content:space-between;font-size:.76rem;
+  color:var(--dim);margin-bottom:5px;}
+.prob-val{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;}
+.prob-track{height:5px;background:#14143a;border-radius:3px;overflow:hidden;}
+.prob-fill{height:100%;border-radius:3px;transition:width .45s ease,background .45s ease;}
+
+/* ── STATS ROW ── */
+.stats-row{display:flex;gap:10px;width:100%;}
+.stat-box{flex:1;background:var(--panel2);border:1px solid var(--border);
+  border-radius:10px;padding:7px 10px;text-align:center;}
+.slabel{font-size:.68rem;color:var(--dim);margin-bottom:2px;}
+.sval{font-size:.9rem;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;}
+
+/* ── BUTTONS ── */
+.btn{border:none;border-radius:10px;font-family:var(--font);font-weight:700;
+  cursor:pointer;transition:transform .12s,filter .12s,opacity .2s;}
+.btn:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.12);}
+.btn:active:not(:disabled){transform:translateY(0);}
+.btn:disabled{opacity:.3;cursor:not-allowed;}
+.btn-row{display:flex;gap:8px;width:100%;}
+.btn-evolve{flex:1;padding:11px 14px;font-size:.92rem;
+  background:linear-gradient(135deg,#7c4dff,#448aff);color:#fff;
+  box-shadow:0 4px 14px rgba(124,77,255,.4);}
+.btn-retire{flex:1;padding:11px 14px;font-size:.92rem;
+  background:linear-gradient(135deg,#ffd740,#ff9800);color:#180800;
+  box-shadow:0 4px 14px rgba(255,215,64,.3);}
+.btn-store{flex:1;padding:9px 10px;font-size:.8rem;
+  background:linear-gradient(135deg,#37474f,#546e7a);color:#fff;}
+.btn-retrieve{flex:1;padding:9px 10px;font-size:.8rem;
+  background:linear-gradient(135deg,#1b5e20,#388e3c);color:#fff;}
+.btn-buy{padding:7px 10px;font-size:.76rem;
+  background:linear-gradient(135deg,#bf360c,#e64a19);color:#fff;
+  white-space:nowrap;flex-shrink:0;}
+
+/* ── PROTECTION PILL ── */
+.prot-pill{display:flex;align-items:center;justify-content:center;gap:7px;
+  width:100%;padding:7px 14px;border-radius:10px;
+  background:var(--panel2);border:1px solid var(--border);
+  font-size:.8rem;color:var(--dim);}
+.prot-cnt{font-weight:900;font-size:1.1rem;color:var(--cyan);font-variant-numeric:tabular-nums;}
+
+/* ── RIGHT COLUMN ── */
+.rcol{display:flex;flex-direction:column;gap:12px;}
+
+/* ── STORAGE ── */
+.slot{border:2px dashed var(--border);border-radius:12px;padding:13px;
+  min-height:90px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:4px;color:var(--dim);font-size:.8rem;
+  text-align:center;transition:border-color .3s,background .3s;}
+.slot.has-item{border-color:var(--gold);border-style:solid;background:rgba(255,215,64,.04);}
+.slevel{font-size:1.05rem;font-weight:900;color:var(--gold);}
+.sname{font-size:.85rem;color:var(--text);font-weight:600;}
+.sprice{font-size:.72rem;color:var(--dim);}
+
+/* ── SHOP ── */
+.shop-item{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid var(--border);gap:8px;}
+.shop-item:last-child{border-bottom:none;}
+.sinfo{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;}
+.sinfo .sn{font-size:.83rem;font-weight:700;white-space:nowrap;}
+.sinfo .sd{font-size:.7rem;color:var(--dim);}
+
+/* ── LOG ── */
+.log-wrap{grid-column:1/-1;}
+.log-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.log-hdr{padding:9px 15px;background:var(--panel2);border-bottom:1px solid var(--border);
+  font-size:.7rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;}
+.log-body{height:155px;overflow-y:auto;padding:7px 13px;display:flex;flex-direction:column;gap:2px;}
+.log-body::-webkit-scrollbar{width:4px;}
+.log-body::-webkit-scrollbar-track{background:transparent;}
+.log-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.le{font-size:.76rem;font-family:'Consolas','Courier New',monospace;padding:1px 0;line-height:1.55;}
+.le.ok{color:var(--ok)}.le.fail{color:var(--fail)}.le.info{color:var(--cyan)}
+.le.gold{color:var(--gold)}.le.sp{color:#ff80ff;font-weight:700}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-title" id="hdrTitle">✨ 한영애 키우기</div>
+  <div class="hdr-gold">💰 <span id="goldEl">0 G</span></div>
+  <button class="btn-reset" onclick="confirmReset()">데이터 초기화</button>
+</header>
+
+<div id="app">
+ <div class="grid">
+
+  <!-- ══ CHARACTER PANEL ══ -->
+  <div class="panel cpanel">
+    <div class="stage-badge">
+      <span class="stag" id="stageTag">0단계</span>
+      <span class="sname" id="stageName">동네 할머니</span>
+    </div>
+
+    <!-- Character frame -->
+    <div class="cframe" id="cframe" data-tier="0">
+      <div class="ov-rays" id="ovRays"></div>
+      <div class="cclip" id="cclip">
+        <img src="hya.png" alt="한영애" class="cimg" id="cimg"
+             onerror="this.outerHTML='<div class=cimg-fallback>👵</div>'">
+        <div class="ov-glow" id="ovGlow"></div>
+        <div class="ov-pts" id="ovPts"></div>
+      </div>
+      <div class="ov-ring" id="ovRing"></div>
+      <div class="ov-crown" id="ovCrown">♛</div>
+      <div class="ov-godlabel" id="ovGodLabel">✦ 한영애신 ✦</div>
+    </div>
+
+    <!-- Probability -->
+    <div class="prob-box">
+      <div class="prob-row">
+        <span>다음 성장 성공률</span>
+        <span class="prob-val" id="probTxt">-</span>
+      </div>
+      <div class="prob-track">
+        <div class="prob-fill" id="probFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="slabel">현재 은퇴가</div>
+        <div class="sval" id="retireEl">0 G</div>
+      </div>
+      <div class="stat-box">
+        <div class="slabel">총 획득 골드</div>
+        <div class="sval" id="totalEl">0 G</div>
+      </div>
+    </div>
+
+    <!-- Main actions -->
+    <div class="btn-row">
+      <button class="btn btn-evolve" id="evolveBtn" onclick="evolve()">⚡ 성장하기</button>
+      <button class="btn btn-retire" id="retireBtn" onclick="retire()">💰 은퇴하기</button>
+    </div>
+
+    <!-- Storage actions -->
+    <div class="btn-row">
+      <button class="btn btn-store" id="storeBtn" onclick="storeChar()">📦 보관함에 넣기</button>
+      <button class="btn btn-retrieve" id="retrieveBtn" onclick="retrieveChar()">📤 꺼내기</button>
+    </div>
+
+    <!-- Protection -->
+    <div class="prot-pill">
+      🛡️ 멘탈 보호권&nbsp;<span class="prot-cnt" id="shieldEl">0</span>개
+    </div>
+  </div>
+
+  <!-- ══ RIGHT COLUMN ══ -->
+  <div class="rcol">
+
+    <!-- Storage -->
+    <div class="panel">
+      <div class="ptitle">📦 보관함 (1칸)</div>
+      <div class="slot" id="storageSlot">
+        <span style="font-size:1.9rem">📭</span>
+        <span>비어있음</span>
+      </div>
+    </div>
+
+    <!-- Shop -->
+    <div class="panel">
+      <div class="ptitle">🏪 상점</div>
+
+      <div class="shop-item">
+        <div class="sinfo">
+          <span class="sn">🛡️ 멘탈 보호권</span>
+          <span class="sd">실패해도 단계 유지 · 1회 사용</span>
+        </div>
+        <button class="btn btn-buy" onclick="buyShield()">2,000,000 G</button>
+      </div>
+
+      <div class="shop-item">
+        <div class="sinfo">
+          <span class="sn">🚀 9단계 직행권</span>
+          <span class="sd">성공률 50% · 실패 시 비용 소멸</span>
+        </div>
+        <button class="btn btn-buy" onclick="buySkip(9,1000000,.5)">1,000,000 G</button>
+      </div>
+
+      <div class="shop-item">
+        <div class="sinfo">
+          <span class="sn">🚀 13단계 직행권</span>
+          <span class="sd">성공률 30% · 실패 시 비용 소멸</span>
+        </div>
+        <button class="btn btn-buy" onclick="buySkip(13,7000000,.3)">7,000,000 G</button>
+      </div>
+
+      <div class="shop-item">
+        <div class="sinfo">
+          <span class="sn">🚀 14단계 직행권</span>
+          <span class="sd">성공률 15% · 실패 시 비용 소멸</span>
+        </div>
+        <button class="btn btn-buy" onclick="buySkip(14,10000000,.15)">10,000,000 G</button>
+      </div>
+    </div>
+
+  </div><!-- /.rcol -->
+
+  <!-- ══ LOG ══ -->
+  <div class="log-wrap">
+    <div class="log-panel">
+      <div class="log-hdr">📜 성장 기록</div>
+      <div class="log-body" id="logBody"></div>
+    </div>
+  </div>
+
+ </div><!-- /.grid -->
+</div><!-- /#app -->
+
+<script>
+// ════════════════════════════════════════
+// STAGE DATA
+// Each stage's .prob = probability to REACH this stage from the previous.
+// When at level N, clicking evolve uses STAGES[N+1].prob.
+// ════════════════════════════════════════
+const STAGES = [
+  {name:'동네 할머니',         prob:1.00, price:0        }, // 0
+  {name:'새벽 시장 할머니',    prob:1.00, price:100      }, // 1  (100% to reach from 0)
+  {name:'소문난 할머니',       prob:0.95, price:300      }, // 2
+  {name:'동네 이장 할머니',    prob:0.90, price:500      }, // 3
+  {name:'구청 민원 할머니',    prob:0.80, price:1000     }, // 4
+  {name:'지역 방송 출연',      prob:0.70, price:2500     }, // 5
+  {name:'전국구 전설',         prob:0.60, price:5000     }, // 6
+  {name:'민족의 수호자',       prob:0.50, price:15000    }, // 7
+  {name:'한반도의 어머니',     prob:0.40, price:40000    }, // 8
+  {name:'동아시아의 수호신',   prob:0.30, price:100000   }, // 9
+  {name:'대륙을 지배하는 자',  prob:0.20, price:300000   }, // 10
+  {name:'세계 5대 성인',       prob:0.16, price:500000   }, // 11
+  {name:'지구 최강 존재',      prob:0.12, price:800000   }, // 12
+  {name:'우주의 수호할머니',   prob:0.10, price:2000000  }, // 13
+  {name:'신에 가까운 한영애',  prob:0.05, price:5000000  }, // 14
+  {name:'한영애신',            prob:0.02, price:15000000 }, // 15  FINAL
+];
+const MAX = STAGES.length - 1; // 15
+
+// ════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════
+const DEF = {lv:0, gold:0, earned:0, shields:0, storage:null};
+let G = {...DEF};
+let logs = [];
+
+// ════════════════════════════════════════
+// PERSISTENCE
+// ════════════════════════════════════════
+function save(){
+  localStorage.setItem('hya2',JSON.stringify({G, logs:logs.slice(0,60)}));
+}
+function load(){
+  try{
+    const d = JSON.parse(localStorage.getItem('hya2')||'null');
+    if(d){
+      G = {...DEF,...d.G};
+      logs = d.logs||[];
+    }
+  }catch(e){}
+}
+
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+function fmt(n){
+  if(n>=1e6) return (n/1e6).toFixed(n%1e6===0?0:1)+'M G';
+  if(n>=1000) return n.toLocaleString('ko-KR')+' G';
+  return n+' G';
+}
+function getTier(lv){
+  if(lv===0) return 0;
+  if(lv<=3)  return 1;
+  if(lv<=6)  return 2;
+  if(lv<=9)  return 3;
+  if(lv<=12) return 4;
+  if(lv===13)return 5;
+  if(lv===14)return 6;
+  return 7;
+}
+
+// ════════════════════════════════════════
+// LOG
+// ════════════════════════════════════════
+function addLog(msg,type='info'){
+  const t = new Date().toTimeString().slice(0,8);
+  logs.unshift({msg,type,t});
+  if(logs.length>120) logs.length=120;
+  renderLog();
+}
+function renderLog(){
+  document.getElementById('logBody').innerHTML =
+    logs.map(l=>`<div class="le ${l.type}">[${l.t}] ${l.msg}</div>`).join('');
+}
+
+// ════════════════════════════════════════
+// PARTICLES
+// ════════════════════════════════════════
+function buildParticles(tier){
+  const c = document.getElementById('ovPts');
+  c.innerHTML='';
+  if(tier<2) return;
+  const counts=[0,0,8,14,20,26,34,50];
+  const n = counts[tier]||0;
+  const palettes={
+    2:['rgba(255,215,0,.9)','rgba(255,180,0,.8)','rgba(255,240,100,.7)'],
+    3:['rgba(255,240,100,.9)','rgba(255,255,200,.8)','rgba(255,215,0,.7)'],
+    4:['rgba(180,120,255,.9)','rgba(255,215,0,.8)','rgba(120,80,255,.7)'],
+    5:['rgba(120,40,255,.9)','rgba(0,80,255,.8)','rgba(200,0,255,.7)'],
+    6:['rgba(255,255,200,.9)','rgba(255,200,255,.8)','rgba(200,255,255,.7)'],
+    7:['rainbow'],
+  };
+  const pal = palettes[tier]||palettes[2];
+  for(let i=0;i<n;i++){
+    const el = document.createElement('div');
+    const x = Math.random()*100, y = Math.random()*100;
+    const sz = Math.random()*3+1.5;
+    const dl = Math.random()*4, dr = Math.random()*2+1.5;
+    let col = pal[0]==='rainbow'
+      ? `hsla(${Math.random()*360},100%,75%,.9)`
+      : pal[Math.floor(Math.random()*pal.length)];
+    el.style.cssText=`position:absolute;left:${x}%;top:${y}%;width:${sz}px;height:${sz}px;
+      background:${col};border-radius:50%;box-shadow:0 0 ${sz*2}px ${col};
+      animation:sparkle-up ${dr}s ${dl}s ease-in-out infinite;pointer-events:none;`;
+    c.appendChild(el);
+  }
+}
+
+// ════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════
+function render(){
+  const {lv,gold,earned,shields,storage} = G;
+  const st = STAGES[lv];
+  const tier = getTier(lv);
+  const isMax = lv>=MAX;
+
+  // Header
+  document.getElementById('goldEl').textContent = fmt(gold);
+  document.getElementById('hdrTitle').textContent = tier>=7
+    ? '🌟 한영애신 강림 🌟' : '✨ 한영애 키우기';
+
+  // Stage info
+  document.getElementById('stageTag').textContent = `${lv}단계`;
+  document.getElementById('stageName').textContent = st.name;
+
+  // Probability
+  const pFill = document.getElementById('probFill');
+  const pTxt  = document.getElementById('probTxt');
+  if(isMax){
+    pTxt.textContent = '✨ 한영애신 달성!';
+    pFill.style.width = '100%';
+    pFill.style.background = 'linear-gradient(90deg,gold,orange,red,violet)';
+  } else {
+    const pct = Math.round(STAGES[lv+1].prob*100);
+    pTxt.textContent = pct+'%';
+    pFill.style.width = pct+'%';
+    pFill.style.background = pct>=80?'#00e676':pct>=50?'#ffd740':pct>=20?'#ff9800':'#ff3d00';
+  }
+
+  // Stats
+  document.getElementById('retireEl').textContent = fmt(st.price);
+  document.getElementById('totalEl').textContent  = fmt(earned);
+
+  // Shields
+  document.getElementById('shieldEl').textContent = shields;
+
+  // Button states
+  document.getElementById('evolveBtn').disabled = isMax;
+  document.getElementById('evolveBtn').textContent = isMax ? '✨ 최고 단계 달성!' : '⚡ 성장하기';
+  document.getElementById('retireBtn').disabled   = st.price===0;
+  document.getElementById('storeBtn').disabled    = storage!==null;
+  document.getElementById('retrieveBtn').disabled = storage===null||lv!==0;
+
+  // Storage slot
+  const slot = document.getElementById('storageSlot');
+  if(storage!==null){
+    const ss = STAGES[storage];
+    slot.className='slot has-item';
+    slot.innerHTML=`<div class="slevel">${storage}단계</div>
+      <div class="sname">${ss.name}</div>
+      <div class="sprice">은퇴가 ${fmt(ss.price)}</div>`;
+  } else {
+    slot.className='slot';
+    slot.innerHTML='<span style="font-size:1.9rem">📭</span><span>비어있음</span>';
+  }
+
+  // Character visual
+  const frame = document.getElementById('cframe');
+  const prevTier = parseInt(frame.dataset.tier||'0');
+  frame.dataset.tier = tier;
+  if(prevTier!==tier) buildParticles(tier);
+
+  // Crown text by tier
+  const crown = document.getElementById('ovCrown');
+  crown.textContent = tier<=1?'♛':tier<=2?'♛':tier<=4?'👑':tier<=5?'✨👑✨':tier<=6?'🌟👑🌟':'⭐👑⭐';
+
+  save();
+}
+
+// ════════════════════════════════════════
+// FLASH
+// ════════════════════════════════════════
+function flash(ok){
+  const clip = document.getElementById('cclip');
+  clip.style.animation='none';
+  void clip.offsetHeight;
+  clip.style.animation = ok ? 'flash-ok .55s ease-out' : 'flash-bad .55s ease-out';
+  if(!ok){
+    const fr = document.getElementById('cframe');
+    fr.style.animation='shake .42s ease-in-out';
+    setTimeout(()=>fr.style.animation='',450);
+  }
+  setTimeout(()=>clip.style.animation='',600);
+}
+
+// ════════════════════════════════════════
+// GAME ACTIONS
+// ════════════════════════════════════════
+function evolve(){
+  if(G.lv>=MAX) return;
+  const nextProb = STAGES[G.lv+1].prob;
+  if(Math.random()<nextProb){
+    G.lv++;
+    addLog(`✅ ${G.lv}단계 성장 성공! → "${STAGES[G.lv].name}"`, 'ok');
+    flash(true);
+    if(G.lv===MAX){
+      setTimeout(()=>{
+        addLog('🌏✨ 한영애신 강림!! 전 세계가 한영애의 가호를 받습니다!','sp');
+        addLog('👵 "자식들아, 이제 할머니가 온 세상을 다 돌봐줄게."','sp');
+        addLog('💫 세계 평화 달성. 모든 전쟁 종식. 코스피 폭등.','sp');
+      },350);
+    }
+  } else {
+    if(G.shields>0){
+      G.shields--;
+      addLog(`🛡️ 실패! 멘탈 보호권 발동 — ${G.lv}단계 유지. (남은 보호권: ${G.shields}개)`,'info');
+      flash(true);
+    } else {
+      const lost = G.lv;
+      G.lv = 0;
+      addLog(`💀 실패! "${STAGES[lost].name}"(${lost}단계) → 동네 할머니로 추락...`,'fail');
+      flash(false);
+    }
+  }
+  render();
+}
+
+function retire(){
+  const price = STAGES[G.lv].price;
+  if(price===0){addLog('0단계는 은퇴할 수 없습니다.','info');return;}
+  G.gold   += price;
+  G.earned += price;
+  addLog(`💰 "${STAGES[G.lv].name}"(${G.lv}단계) 은퇴! +${fmt(price)} 획득`,'gold');
+  G.lv = 0;
+  render();
+}
+
+function buyShield(){
+  const cost=2000000;
+  if(G.gold<cost){addLog(`❌ 골드 부족 (보유 ${fmt(G.gold)} / 필요 ${fmt(cost)})`,'fail');return;}
+  G.gold-=cost; G.shields++;
+  addLog(`🛡️ 멘탈 보호권 구매! 현재 ${G.shields}개 보유`,'info');
+  render();
+}
+
+function buySkip(target,cost,chance){
+  if(G.gold<cost){addLog(`❌ 골드 부족 (보유 ${fmt(G.gold)} / 필요 ${fmt(cost)})`,'fail');return;}
+  G.gold-=cost;
+  if(Math.random()<chance){
+    G.lv=target;
+    addLog(`🚀 ${target}단계 직행 성공! → "${STAGES[target].name}"`,'sp');
+    flash(true);
+  } else {
+    addLog(`💸 ${target}단계 직행 실패... ${fmt(cost)} 증발`,'fail');
+    flash(false);
+  }
+  render();
+}
+
+function storeChar(){
+  if(G.storage!==null){addLog('❌ 보관함이 가득 찼습니다.','fail');return;}
+  const lv=G.lv;
+  G.storage=lv; G.lv=0;
+  addLog(`📦 "${STAGES[lv].name}"(${lv}단계) → 보관함에 보관. 메인 0단계로 초기화.`,'info');
+  render();
+}
+
+function retrieveChar(){
+  if(G.storage===null){addLog('❌ 보관함이 비어있습니다.','fail');return;}
+  if(G.lv!==0){addLog('❌ 현재 0단계일 때만 꺼낼 수 있습니다.','fail');return;}
+  const lv=G.storage;
+  G.lv=lv; G.storage=null;
+  addLog(`📤 "${STAGES[lv].name}"(${lv}단계) → 보관함에서 복귀!`,'info');
+  flash(true);
+  render();
+}
+
+function confirmReset(){
+  if(confirm('⚠️ 모든 데이터를 초기화할까요?\n이 작업은 되돌릴 수 없습니다.')){
+    G={...DEF}; logs=[];
+    localStorage.removeItem('hya2');
+    buildParticles(0);
+    addLog('🔄 초기화 완료. 다시 동네 할머니부터 시작!','info');
+    render();
+  }
+}
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+load();
+buildParticles(getTier(G.lv));
+render();
+if(logs.length===0){
+  addLog('🎮 한영애 키우기 시작! 동네 할머니를 한영애신으로 키워보세요.','info');
+  addLog('💡 성장 실패 시 0단계로 초기화됩니다. 멘탈 보호권으로 방어하세요.','info');
+}
+renderLog();
+</script>
+</body>
+</html>

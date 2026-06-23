@@ -83,85 +83,112 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
   z-index:10;pointer-events:none;opacity:0;transition:opacity .5s;
   font-size:0;font-weight:900;color:#fff;white-space:nowrap;letter-spacing:2px;
   text-shadow:0 0 20px #ff9800,0 0 40px #ff6f00;}
+.ov-aura{position:absolute;inset:-60px;z-index:0;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.15) 0%,rgba(255,193,7,.1) 30%,transparent 70%);
+  border-radius:50%;filter:blur(15px);transition:opacity .7s;animation:cosmic-pulse 2s ease-in-out infinite;}
+.ov-divine{position:absolute;inset:-80px;z-index:-1;pointer-events:none;opacity:0;
+  background:conic-gradient(from 0deg,rgba(255,0,0,.15),rgba(255,127,0,.15),rgba(255,255,0,.15),
+                            rgba(0,255,0,.15),rgba(0,127,255,.15),rgba(75,0,130,.15),rgba(148,0,211,.15),rgba(255,0,0,.15));
+  filter:blur(25px);transition:opacity .7s;animation:divine-explosion 3s ease-in-out infinite;}
 
 /* ═══════════════════════════════════
    TIER VISUAL RULES (WHITE THEME)
    ═══════════════════════════════════ */
 
-.cframe[data-tier="1"] .cimg{filter:brightness(1.05) sepia(.08);}
+.cframe[data-tier="0"] .cimg{filter:none;}
+
+.cframe[data-tier="1"] .cimg{filter:brightness(1.08) sepia(.1);}
 .cframe[data-tier="1"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 85%,rgba(255,152,0,.25) 0%,transparent 65%);
+  background:radial-gradient(ellipse at 50% 85%,rgba(255,152,0,.3) 0%,transparent 65%);
   animation:glow-breathe 3s ease-in-out infinite;}
 .cframe[data-tier="1"] .ov-ring{opacity:1;
-  box-shadow:0 0 0 1px rgba(255,152,0,.25),0 0 12px rgba(255,152,0,.15);}
+  box-shadow:0 0 0 2px rgba(255,152,0,.3),0 0 16px rgba(255,152,0,.2);}
 
-.cframe[data-tier="2"] .cimg{filter:brightness(1.08) saturate(1.08);}
+.cframe[data-tier="2"] .cimg{filter:brightness(1.12) saturate(1.12);}
 .cframe[data-tier="2"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 60%,rgba(255,193,7,.28) 0%,rgba(255,152,0,.1) 55%,transparent 75%);
+  background:radial-gradient(ellipse at 50% 60%,rgba(255,193,7,.35) 0%,rgba(255,152,0,.15) 55%,transparent 75%);
   animation:glow-breathe 2.2s ease-in-out infinite;}
 .cframe[data-tier="2"] .ov-ring{opacity:1;animation:ring-gold 2.2s ease-in-out infinite;
-  box-shadow:0 0 0 2px rgba(255,152,0,.4),0 0 18px rgba(255,152,0,.3);}
-.cframe[data-tier="2"] .ov-crown{opacity:1;font-size:1.9rem;animation:crown-float 2.5s ease-in-out infinite;}
+  box-shadow:0 0 0 3px rgba(255,152,0,.5),0 0 24px rgba(255,152,0,.35);}
+.cframe[data-tier="2"] .ov-crown{opacity:1;font-size:2rem;animation:crown-float 2.5s ease-in-out infinite;}
 
-.cframe[data-tier="3"] .cimg{filter:brightness(1.1) saturate(1.15) contrast(1.03);}
+.cframe[data-tier="3"] .cimg{filter:brightness(1.15) saturate(1.2) contrast(1.05);}
 .cframe[data-tier="3"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 40%,rgba(255,235,59,.32) 0%,rgba(255,193,7,.18) 40%,transparent 70%);
+  background:radial-gradient(ellipse at 50% 40%,rgba(255,235,59,.4) 0%,rgba(255,193,7,.25) 40%,transparent 70%);
   animation:glow-breathe 1.8s ease-in-out infinite;}
 .cframe[data-tier="3"] .ov-ring{opacity:1;animation:ring-gold 1.8s ease-in-out infinite;
-  box-shadow:0 0 0 2px rgba(255,152,0,.5),0 0 24px rgba(255,152,0,.35);}
+  box-shadow:0 0 0 3px rgba(255,152,0,.6),0 0 32px rgba(255,152,0,.45);}
 .cframe[data-tier="3"] .ov-rays{opacity:1;
-  background:repeating-conic-gradient(rgba(255,235,100,.15) 0deg,transparent 8deg,rgba(255,235,100,.08) 16deg,transparent 24deg);
+  background:repeating-conic-gradient(rgba(255,235,100,.2) 0deg,transparent 8deg,rgba(255,235,100,.1) 16deg,transparent 24deg);
   animation:rays-spin 10s linear infinite;}
-.cframe[data-tier="3"] .ov-crown{opacity:1;font-size:2.2rem;top:-28px;animation:crown-float 2s ease-in-out infinite;}
+.cframe[data-tier="3"] .ov-crown{opacity:1;font-size:2.3rem;top:-28px;animation:crown-float 2s ease-in-out infinite;}
 
-.cframe[data-tier="4"] .cimg{filter:brightness(1.13) saturate(1.3) contrast(1.08);}
+.cframe[data-tier="4"] .cimg{filter:brightness(1.18) saturate(1.35) contrast(1.1);}
 .cframe[data-tier="4"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 50%,rgba(186,104,200,.32) 0%,rgba(255,152,0,.2) 35%,rgba(156,39,176,.12) 60%,transparent 82%);
+  background:radial-gradient(ellipse at 50% 50%,rgba(186,104,200,.4) 0%,rgba(255,152,0,.25) 35%,rgba(156,39,176,.18) 60%,transparent 85%);
   animation:glow-cosmic 1.5s ease-in-out infinite;}
 .cframe[data-tier="4"] .ov-ring{opacity:1;animation:ring-cosmic 1.5s ease-in-out infinite;
-  box-shadow:0 0 0 2px rgba(186,104,200,.6),0 0 20px rgba(186,104,200,.4),0 0 40px rgba(255,152,0,.25);}
-.cframe[data-tier="4"] .ov-rays{opacity:1;inset:-45px;
-  background:repeating-conic-gradient(rgba(186,104,200,.2) 0deg,transparent 7deg,rgba(255,193,7,.12) 14deg,transparent 21deg);
+  box-shadow:0 0 0 3px rgba(186,104,200,.7),0 0 28px rgba(186,104,200,.5),0 0 50px rgba(255,152,0,.3);}
+.cframe[data-tier="4"] .ov-rays{opacity:1;inset:-50px;
+  background:repeating-conic-gradient(rgba(186,104,200,.25) 0deg,transparent 7deg,rgba(255,193,7,.15) 14deg,transparent 21deg);
   animation:rays-spin 7s linear infinite;}
-.cframe[data-tier="4"] .ov-crown{opacity:1;font-size:2.5rem;top:-30px;animation:crown-divine 1.5s ease-in-out infinite;
-  filter:drop-shadow(0 0 10px #ba68c8) drop-shadow(0 0 20px #9c27b0);}
+.cframe[data-tier="4"] .ov-crown{opacity:1;font-size:2.6rem;top:-30px;animation:crown-divine 1.5s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px #ba68c8) drop-shadow(0 0 24px #9c27b0);}
+/* Lightning effect for tier 4 */
+.cframe[data-tier="4"]::before{content:'';position:absolute;inset:-20px;z-index:0;pointer-events:none;
+  background:radial-gradient(circle at 30% 40%,rgba(255,255,255,.4) 0%,transparent 2%),
+             radial-gradient(circle at 70% 60%,rgba(255,255,255,.3) 0%,transparent 2%),
+             radial-gradient(circle at 50% 20%,rgba(255,255,255,.35) 0%,transparent 1.5%);
+  opacity:0;animation:lightning-flash 3s ease-in-out infinite;}
 
-.cframe[data-tier="5"] .cimg{filter:brightness(1.18) saturate(1.35) contrast(1.1) hue-rotate(3deg);}
+.cframe[data-tier="5"] .cimg{filter:brightness(1.22) saturate(1.45) contrast(1.12) hue-rotate(5deg);}
 .cframe[data-tier="5"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 50%,rgba(103,58,183,.35) 0%,rgba(63,81,181,.22) 30%,rgba(0,150,136,.18) 55%,transparent 80%);
+  background:radial-gradient(ellipse at 50% 50%,rgba(103,58,183,.45) 0%,rgba(63,81,181,.3) 30%,rgba(0,150,136,.25) 55%,transparent 85%);
   animation:glow-galaxy 1.2s ease-in-out infinite;}
 .cframe[data-tier="5"] .ov-ring{opacity:1;animation:ring-galaxy 1.2s ease-in-out infinite;
-  box-shadow:0 0 0 3px rgba(103,58,183,.7),0 0 24px rgba(103,58,183,.5),0 0 50px rgba(0,150,136,.35);}
-.cframe[data-tier="5"] .ov-rays{opacity:1;inset:-55px;
-  background:repeating-conic-gradient(rgba(103,58,183,.25) 0deg,rgba(0,150,136,.18) 5deg,transparent 10deg,rgba(63,81,181,.2) 15deg,transparent 20deg);
+  box-shadow:0 0 0 4px rgba(103,58,183,.8),0 0 32px rgba(103,58,183,.6),0 0 64px rgba(0,150,136,.4);}
+.cframe[data-tier="5"] .ov-rays{opacity:1;inset:-65px;
+  background:repeating-conic-gradient(rgba(103,58,183,.3) 0deg,rgba(0,150,136,.25) 5deg,transparent 10deg,rgba(63,81,181,.25) 15deg,transparent 20deg);
   animation:rays-spin 5s linear infinite;}
-.cframe[data-tier="5"] .ov-crown{opacity:1;font-size:2.7rem;top:-32px;animation:crown-divine 1.2s ease-in-out infinite;
-  filter:drop-shadow(0 0 14px #673ab7) drop-shadow(0 0 28px #3f51b5);}
+.cframe[data-tier="5"] .ov-crown{opacity:1;font-size:2.8rem;top:-32px;animation:crown-divine 1.2s ease-in-out infinite;
+  filter:drop-shadow(0 0 16px #673ab7) drop-shadow(0 0 32px #3f51b5);}
+/* Rainbow effect for tier 5 */
+.cframe[data-tier="5"]::after{content:'';position:absolute;inset:-40px;z-index:0;pointer-events:none;
+  background:conic-gradient(from 0deg,rgba(255,0,0,.2),rgba(255,127,0,.2),rgba(255,255,0,.2),
+                            rgba(0,255,0,.2),rgba(0,127,255,.2),rgba(75,0,130,.2),rgba(148,0,211,.2),rgba(255,0,0,.2));
+  filter:blur(20px);opacity:.6;animation:rainbow-spin 8s linear infinite;}
 
-.cframe[data-tier="6"] .cimg{filter:brightness(1.25) saturate(1.5) contrast(1.12);}
+.cframe[data-tier="6"] .cimg{filter:brightness(1.28) saturate(1.55) contrast(1.15);}
 .cframe[data-tier="6"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 40%,rgba(255,255,200,.42) 0%,rgba(255,193,7,.32) 25%,rgba(233,30,99,.2) 50%,rgba(103,58,183,.16) 75%,transparent 90%);
+  background:radial-gradient(ellipse at 50% 40%,rgba(255,255,200,.5) 0%,rgba(255,193,7,.4) 25%,rgba(233,30,99,.3) 50%,rgba(103,58,183,.25) 75%,transparent 95%);
   animation:glow-transcend .9s ease-in-out infinite;}
 .cframe[data-tier="6"] .ov-ring{opacity:1;animation:ring-transcend .9s ease-in-out infinite;
-  box-shadow:0 0 0 3px rgba(255,193,7,.7),0 0 24px rgba(255,193,7,.5),0 0 50px rgba(255,152,0,.4);}
-.cframe[data-tier="6"] .ov-rays{opacity:1;inset:-65px;
-  background:repeating-conic-gradient(rgba(255,255,150,.28) 0deg,rgba(255,193,7,.18) 5deg,transparent 10deg,rgba(0,188,212,.25) 15deg,transparent 20deg);
+  box-shadow:0 0 0 4px rgba(255,193,7,.8),0 0 32px rgba(255,193,7,.6),0 0 64px rgba(255,152,0,.5);}
+.cframe[data-tier="6"] .ov-rays{opacity:1;inset:-80px;
+  background:repeating-conic-gradient(rgba(255,255,150,.35) 0deg,rgba(255,193,7,.25) 5deg,transparent 10deg,rgba(0,188,212,.3) 15deg,transparent 20deg);
   animation:rays-spin 4s linear infinite;}
-.cframe[data-tier="6"] .ov-crown{opacity:1;font-size:2.9rem;top:-34px;animation:crown-divine .9s ease-in-out infinite;
-  filter:drop-shadow(0 0 18px #ffd54f) drop-shadow(0 0 36px #ff9800);}
+.cframe[data-tier="6"] .ov-crown{opacity:1;font-size:3rem;top:-34px;animation:crown-divine .9s ease-in-out infinite;
+  filter:drop-shadow(0 0 20px #ffd54f) drop-shadow(0 0 40px #ff9800);}
+/* Cosmic aura for tier 6 */
+.cframe[data-tier="6"] .ov-aura{opacity:1;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.2) 0%,rgba(255,193,7,.15) 30%,rgba(233,30,99,.1) 60%,transparent 80%);
+  animation:cosmic-pulse 1.5s ease-in-out infinite;}
 
 .cframe[data-tier="7"] .cimg{animation:img-god 2s ease-in-out infinite;}
 .cframe[data-tier="7"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.5) 0%,rgba(255,193,7,.4) 20%,rgba(255,87,34,.3) 40%,rgba(233,30,99,.22) 60%,rgba(103,58,183,.16) 80%,transparent 100%);
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.6) 0%,rgba(255,193,7,.5) 20%,rgba(255,87,34,.4) 40%,rgba(233,30,99,.3) 60%,rgba(103,58,183,.25) 80%,transparent 100%);
   animation:glow-god .65s ease-in-out infinite;}
 .cframe[data-tier="7"] .ov-ring{opacity:1;animation:ring-god .65s ease-in-out infinite;
-  box-shadow:0 0 0 4px rgba(255,255,255,.8),0 0 20px rgba(255,193,7,.6),0 0 50px rgba(255,152,0,.5),0 0 90px rgba(186,104,200,.25);}
-.cframe[data-tier="7"] .ov-rays{opacity:1;inset:-85px;
-  background:repeating-conic-gradient(rgba(255,235,59,.35) 0deg,rgba(255,152,0,.25) 4deg,rgba(233,30,99,.3) 8deg,rgba(156,39,176,.25) 12deg,rgba(0,150,136,.3) 16deg,rgba(0,188,212,.25) 20deg,transparent 24deg);
+  box-shadow:0 0 0 5px rgba(255,255,255,.9),0 0 28px rgba(255,193,7,.7),0 0 64px rgba(255,152,0,.6),0 0 100px rgba(186,104,200,.35);}
+.cframe[data-tier="7"] .ov-rays{opacity:1;inset:-100px;
+  background:repeating-conic-gradient(rgba(255,235,59,.4) 0deg,rgba(255,152,0,.3) 4deg,rgba(233,30,99,.35) 8deg,rgba(156,39,176,.3) 12deg,rgba(0,150,136,.35) 16deg,rgba(0,188,212,.3) 20deg,transparent 24deg);
   animation:rays-spin 2.5s linear infinite;}
-.cframe[data-tier="7"] .ov-crown{opacity:1;font-size:3.3rem;top:-36px;animation:crown-god .65s ease-in-out infinite;
-  filter:drop-shadow(0 0 22px #ffff00) drop-shadow(0 0 44px #ff9800) drop-shadow(0 0 66px #ff5722);}
-.cframe[data-tier="7"] .ov-godlabel{opacity:1;font-size:1rem;animation:godlabel 0.8s ease-in-out infinite;}
+.cframe[data-tier="7"] .ov-crown{opacity:1;font-size:3.5rem;top:-36px;animation:crown-god .65s ease-in-out infinite;
+  filter:drop-shadow(0 0 28px #ffff00) drop-shadow(0 0 56px #ff9800) drop-shadow(0 0 84px #ff5722);}
+.cframe[data-tier="7"] .ov-godlabel{opacity:1;font-size:1.05rem;animation:godlabel 0.8s ease-in-out infinite;}
+/* Divine explosion for tier 7 */
+.cframe[data-tier="7"] .ov-divine{opacity:1;
+  animation:divine-explosion 2s ease-in-out infinite;}
 
 /* ═══════════════════════════════════
    KEYFRAMES
@@ -204,6 +231,30 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
 @keyframes flash-bad{0%{box-shadow:0 0 0 0 rgba(244,67,54,.9)}100%{box-shadow:0 0 0 30px rgba(244,67,54,0)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 @keyframes pulse-scale{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+/* Lightning flash animation for tier 4+ */
+@keyframes lightning-flash{
+  0%,92%,100%{opacity:0;}
+  93%{opacity:.4;}
+  94%{opacity:0;}
+  95%{opacity:.6;}
+  96%{opacity:0;}
+  97%{opacity:.5;}
+  98%{opacity:0;}
+}
+/* Rainbow spin for tier 5+ */
+@keyframes rainbow-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* Cosmic aura pulse for tier 6+ */
+@keyframes cosmic-pulse{
+  0%,100%{transform:scale(1);opacity:.3;}
+  50%{transform:scale(1.15);opacity:.5;}
+}
+/* Divine explosion for tier 7 */
+@keyframes divine-explosion{
+  0%,100%{transform:scale(1);opacity:.4;filter:hue-rotate(0deg);}
+  25%{transform:scale(1.2);opacity:.7;filter:hue-rotate(90deg);}
+  50%{transform:scale(1.1);opacity:.5;filter:hue-rotate(180deg);}
+  75%{transform:scale(1.3);opacity:.8;filter:hue-rotate(270deg);}
+}
 
 /* ── PROBABILITY BAR ── */
 .prob-box{width:100%;background:var(--panel);border:1px solid var(--border);
@@ -339,6 +390,8 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
         <div class="ov-ring" id="ovRing"></div>
         <div class="ov-crown" id="ovCrown">♛</div>
         <div class="ov-godlabel" id="ovGodLabel">✦ 한영애신 ✦</div>
+        <div class="ov-aura" id="ovAura"></div>
+        <div class="ov-divine" id="ovDivine"></div>
       </div>
 
       <!-- Probability -->

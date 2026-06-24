@@ -337,11 +337,6 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
 
     <!-- ══ CHARACTER PANEL ══ -->
     <div class="panel cpanel" style="width:100%;">
-      <div class="stage-badge">
-        <span class="stag" id="stageTag">0단계</span>
-        <span class="sname" id="stageName">동네 할머니</span>
-      </div>
-
       <!-- Character frame -->
       <div class="cframe" id="cframe" data-tier="0">
         <div class="ov-rays" id="ovRays"></div>
@@ -354,6 +349,12 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
         <div class="ov-ring" id="ovRing"></div>
         <div class="ov-crown" id="ovCrown">♛</div>
         <div class="ov-godlabel" id="ovGodLabel">✦ 한영애신 ✦</div>
+      </div>
+
+      <!-- Name & Level above probability -->
+      <div class="stage-badge">
+        <span class="stag" id="stageTag">0단계</span>
+        <span class="sname" id="stageName">동네 할머니</span>
       </div>
 
       <!-- Probability -->
@@ -407,6 +408,14 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
           <span class="sd">실패해도 단계 유지 · 1회 사용</span>
         </div>
         <button class="btn btn-buy" onclick="buyShield()">2M G</button>
+      </div>
+
+      <div class="shop-item">
+        <div class="sinfo">
+          <span class="sn">🛡️ 멘탈 보호권 x10</span>
+          <span class="sd">실패해도 단계 유지 · 10개 묶음</span>
+        </div>
+        <button class="btn btn-buy" onclick="buyShield10()">19.5M G</button>
       </div>
 
       <div class="shop-item">
@@ -773,6 +782,14 @@ function buyShield(){
   if(G.gold<cost){addLog(`❌ 골드 부족 (보유 ${fmt(G.gold)} / 필요 ${fmt(cost)})`,'fail');return;}
   G.gold-=cost; G.shields++;
   addLog(`🛡️ 멘탈 보호권 구매! 현재 ${G.shields}개 보유`,'info');
+  render();
+}
+
+function buyShield10(){
+  const cost=19500000;
+  if(G.gold<cost){addLog(`❌ 골드 부족 (보유 ${fmt(G.gold)} / 필요 ${fmt(cost)})`,'fail');return;}
+  G.gold-=cost; G.shields+=10;
+  addLog(`🛡️ 멘탈 보호권 x10 구매! 현재 ${G.shields}개 보유`,'info');
   render();
 }
 

@@ -114,54 +114,63 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
   animation:rays-spin 10s linear infinite;}
 .cframe[data-tier="3"] .ov-crown{opacity:1;font-size:2.2rem;top:-28px;animation:crown-float 2s ease-in-out infinite;}
 
-.cframe[data-tier="4"] .cimg{filter:brightness(1.13) saturate(1.3) contrast(1.08);}
+/* ═══════════════════════════════════
+   TIER 4+ ULTRA EFFECTS (10+ STRENGTH)
+   ═══════════════════════════════════ */
+
+.cframe[data-tier="4"] .cimg{filter:brightness(1.15) saturate(1.35) contrast(1.1);
+  animation:img-thunder 1.5s ease-in-out infinite;}
 .cframe[data-tier="4"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 50%,rgba(186,104,200,.32) 0%,rgba(255,152,0,.2) 35%,rgba(156,39,176,.12) 60%,transparent 82%);
-  animation:glow-cosmic 1.5s ease-in-out infinite;}
-.cframe[data-tier="4"] .ov-ring{opacity:1;animation:ring-cosmic 1.5s ease-in-out infinite;
-  box-shadow:0 0 0 2px rgba(186,104,200,.6),0 0 20px rgba(186,104,200,.4),0 0 40px rgba(255,152,0,.25);}
-.cframe[data-tier="4"] .ov-rays{opacity:1;inset:-45px;
-  background:repeating-conic-gradient(rgba(186,104,200,.2) 0deg,transparent 7deg,rgba(255,193,7,.12) 14deg,transparent 21deg);
-  animation:rays-spin 7s linear infinite;}
-.cframe[data-tier="4"] .ov-crown{opacity:1;font-size:2.5rem;top:-30px;animation:crown-divine 1.5s ease-in-out infinite;
-  filter:drop-shadow(0 0 10px #ba68c8) drop-shadow(0 0 20px #9c27b0);}
+  background:radial-gradient(ellipse at 50% 50%,rgba(138,180,255,.35) 0%,rgba(66,165,245,.25) 30%,rgba(30,136,176,.2) 55%,rgba(186,104,200,.15) 75%,transparent 90%);
+  animation:glow-thunder 1.2s ease-in-out infinite;}
+.cframe[data-tier="4"] .ov-ring{opacity:1;animation:ring-thunder 1.2s ease-in-out infinite;
+  box-shadow:0 0 0 3px rgba(66,165,245,.7),0 0 30px rgba(66,165,245,.5),0 0 60px rgba(138,180,255,.3),inset 0 0 20px rgba(66,165,245,.2);}
+.cframe[data-tier="4"] .ov-rays{opacity:1;inset:-60px;
+  background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(66,165,245,.25) 0deg,rgba(138,180,255,.15) 3deg,transparent 6deg,rgba(255,235,59,.1) 9deg,transparent 12deg);
+  animation:rays-thunder 3s linear infinite;}
+.cframe[data-tier="4"] .ov-crown{opacity:1;font-size:2.6rem;top:-32px;animation:crown-thunder 1.2s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px #42a5f5) drop-shadow(0 0 24px #1e88e5) drop-shadow(0 0 36px #0d47a1);}
 
-.cframe[data-tier="5"] .cimg{filter:brightness(1.18) saturate(1.35) contrast(1.1) hue-rotate(3deg);}
+.cframe[data-tier="5"] .cimg{filter:brightness(1.2) saturate(1.45) contrast(1.12);
+  animation:img-rainbow 2s linear infinite;}
 .cframe[data-tier="5"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 50%,rgba(103,58,183,.35) 0%,rgba(63,81,181,.22) 30%,rgba(0,150,136,.18) 55%,transparent 80%);
-  animation:glow-galaxy 1.2s ease-in-out infinite;}
-.cframe[data-tier="5"] .ov-ring{opacity:1;animation:ring-galaxy 1.2s ease-in-out infinite;
-  box-shadow:0 0 0 3px rgba(103,58,183,.7),0 0 24px rgba(103,58,183,.5),0 0 50px rgba(0,150,136,.35);}
-.cframe[data-tier="5"] .ov-rays{opacity:1;inset:-55px;
-  background:repeating-conic-gradient(rgba(103,58,183,.25) 0deg,rgba(0,150,136,.18) 5deg,transparent 10deg,rgba(63,81,181,.2) 15deg,transparent 20deg);
-  animation:rays-spin 5s linear infinite;}
-.cframe[data-tier="5"] .ov-crown{opacity:1;font-size:2.7rem;top:-32px;animation:crown-divine 1.2s ease-in-out infinite;
-  filter:drop-shadow(0 0 14px #673ab7) drop-shadow(0 0 28px #3f51b5);}
+  background:linear-gradient(135deg,rgba(255,0,0,.2),rgba(255,127,0,.15),rgba(255,255,0,.15),rgba(0,255,0,.15),rgba(0,127,255,.15),rgba(127,0,255,.15),rgba(255,0,255,.15));
+  animation:glow-rainbow 1.8s linear infinite;}
+.cframe[data-tier="5"] .ov-ring{opacity:1;animation:ring-rainbow 1.8s linear infinite;
+  box-shadow:0 0 0 3px rgba(255,0,0,.5),0 0 0 6px rgba(255,127,0,.4),0 0 0 9px rgba(255,255,0,.3),0 0 0 12px rgba(0,255,0,.25),0 0 0 15px rgba(0,127,255,.2),0 0 30px rgba(127,0,255,.3),0 0 50px rgba(255,0,255,.2);}
+.cframe[data-tier="5"] .ov-rays{opacity:1;inset:-70px;
+  background:repeating-conic-gradient(from 0deg,rainbow-color 0deg,transparent 15deg);}
+.cframe[data-tier="5"] .ov-crown{opacity:1;font-size:2.9rem;top:-36px;animation:crown-rainbow 1.5s ease-in-out infinite;
+  filter:drop-shadow(0 0 16px #ff0000) drop-shadow(0 0 24px #00ff00) drop-shadow(0 0 32px #0000ff) drop-shadow(0 0 40px #ffff00);}
 
-.cframe[data-tier="6"] .cimg{filter:brightness(1.25) saturate(1.5) contrast(1.12);}
+.cframe[data-tier="6"] .cimg{filter:brightness(1.28) saturate(1.55) contrast(1.15);
+  animation:img-cosmos 2.5s ease-in-out infinite;}
 .cframe[data-tier="6"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 40%,rgba(255,255,200,.42) 0%,rgba(255,193,7,.32) 25%,rgba(233,30,99,.2) 50%,rgba(103,58,183,.16) 75%,transparent 90%);
-  animation:glow-transcend .9s ease-in-out infinite;}
-.cframe[data-tier="6"] .ov-ring{opacity:1;animation:ring-transcend .9s ease-in-out infinite;
-  box-shadow:0 0 0 3px rgba(255,193,7,.7),0 0 24px rgba(255,193,7,.5),0 0 50px rgba(255,152,0,.4);}
-.cframe[data-tier="6"] .ov-rays{opacity:1;inset:-65px;
-  background:repeating-conic-gradient(rgba(255,255,150,.28) 0deg,rgba(255,193,7,.18) 5deg,transparent 10deg,rgba(0,188,212,.25) 15deg,transparent 20deg);
-  animation:rays-spin 4s linear infinite;}
-.cframe[data-tier="6"] .ov-crown{opacity:1;font-size:2.9rem;top:-34px;animation:crown-divine .9s ease-in-out infinite;
-  filter:drop-shadow(0 0 18px #ffd54f) drop-shadow(0 0 36px #ff9800);}
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.5) 0%,rgba(186,104,200,.35) 15%,rgba(103,58,183,.3) 30%,rgba(63,81,181,.25) 45%,rgba(33,150,243,.2) 60%,rgba(0,150,136,.15) 75%,transparent 95%);
+  animation:glow-cosmos 1.5s ease-in-out infinite;}
+.cframe[data-tier="6"] .ov-ring{opacity:1;animation:ring-cosmos 1.5s ease-in-out infinite;
+  box-shadow:0 0 0 2px rgba(255,255,255,.8),0 0 0 4px rgba(186,104,200,.6),0 0 0 6px rgba(103,58,183,.5),0 0 40px rgba(103,58,183,.4),0 0 80px rgba(63,81,181,.3),0 0 120px rgba(33,150,243,.2);}
+.cframe[data-tier="6"] .ov-rays{opacity:1;inset:-80px;
+  background:repeating-conic-gradient(rgba(255,255,200,.3) 0deg,rgba(186,104,200,.2) 4deg,rgba(103,58,183,.15) 8deg,rgba(63,81,181,.1) 12deg,rgba(33,150,243,.08) 16deg,transparent 20deg);
+  animation:rays-cosmos 6s linear infinite;}
+.cframe[data-tier="6"] .ov-crown{opacity:1;font-size:3.2rem;top:-40px;animation:crown-cosmos 1.3s ease-in-out infinite;
+  filter:drop-shadow(0 0 20px #ffffff) drop-shadow(0 0 30px #ba68c8) drop-shadow(0 0 45px #673ab7) drop-shadow(0 0 60px #3f51b5);}
 
-.cframe[data-tier="7"] .cimg{animation:img-god 2s ease-in-out infinite;}
+.cframe[data-tier="7"] .cimg{animation:img-god 1.5s ease-in-out infinite;
+  filter:brightness(1.35) saturate(1.6) contrast(1.18);}
 .cframe[data-tier="7"] .ov-glow{opacity:1;
-  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.5) 0%,rgba(255,193,7,.4) 20%,rgba(255,87,34,.3) 40%,rgba(233,30,99,.22) 60%,rgba(103,58,183,.16) 80%,transparent 100%);
-  animation:glow-god .65s ease-in-out infinite;}
-.cframe[data-tier="7"] .ov-ring{opacity:1;animation:ring-god .65s ease-in-out infinite;
-  box-shadow:0 0 0 4px rgba(255,255,255,.8),0 0 20px rgba(255,193,7,.6),0 0 50px rgba(255,152,0,.5),0 0 90px rgba(186,104,200,.25);}
-.cframe[data-tier="7"] .ov-rays{opacity:1;inset:-85px;
-  background:repeating-conic-gradient(rgba(255,235,59,.35) 0deg,rgba(255,152,0,.25) 4deg,rgba(233,30,99,.3) 8deg,rgba(156,39,176,.25) 12deg,rgba(0,150,136,.3) 16deg,rgba(0,188,212,.25) 20deg,transparent 24deg);
-  animation:rays-spin 2.5s linear infinite;}
-.cframe[data-tier="7"] .ov-crown{opacity:1;font-size:3.3rem;top:-36px;animation:crown-god .65s ease-in-out infinite;
-  filter:drop-shadow(0 0 22px #ffff00) drop-shadow(0 0 44px #ff9800) drop-shadow(0 0 66px #ff5722);}
-.cframe[data-tier="7"] .ov-godlabel{opacity:1;font-size:1rem;animation:godlabel 0.8s ease-in-out infinite;}
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.65) 0%,rgba(255,235,59,.5) 10%,rgba(255,193,7,.4) 20%,rgba(255,87,34,.3) 35%,rgba(233,30,99,.25) 50%,rgba(156,39,176,.2) 65%,rgba(103,58,183,.15) 80%,transparent 100%);
+  animation:glow-god .8s ease-in-out infinite;}
+.cframe[data-tier="7"] .ov-ring{opacity:1;animation:ring-god .8s ease-in-out infinite;
+  box-shadow:0 0 0 3px rgba(255,255,255,.9),0 0 0 6px rgba(255,235,59,.7),0 0 0 9px rgba(255,193,7,.6),0 0 30px rgba(255,152,0,.5),0 0 60px rgba(255,87,34,.4),0 0 90px rgba(233,30,99,.3),0 0 120px rgba(156,39,176,.25);}
+.cframe[data-tier="7"] .ov-rays{opacity:1;inset:-100px;
+  background:repeating-conic-gradient(rgba(255,255,255,.4) 0deg,rgba(255,235,59,.3) 2deg,rgba(255,193,7,.25) 4deg,rgba(255,152,0,.2) 6deg,rgba(255,87,34,.15) 8deg,rgba(233,30,99,.1) 10deg,rgba(156,39,176,.08) 12deg,rgba(103,58,183,.05) 14deg,transparent 16deg);
+  animation:rays-god 2s linear infinite;}
+.cframe[data-tier="7"] .ov-crown{opacity:1;font-size:3.8rem;top:-45px;animation:crown-god .8s ease-in-out infinite;
+  filter:drop-shadow(0 0 25px #ffff00) drop-shadow(0 0 45px #ff9800) drop-shadow(0 0 65px #ff5722) drop-shadow(0 0 85px #e91e63) drop-shadow(0 0 105px #9c27b0);}
+.cframe[data-tier="7"] .ov-godlabel{opacity:1;font-size:1.1rem;animation:godlabel 0.6s ease-in-out infinite;}
+/* TIER 4+ GOD LABEL VISIBILITY */
+.cframe[data-tier="4"] .ov-godlabel,.cframe[data-tier="5"] .ov-godlabel,.cframe[data-tier="6"] .ov-godlabel{opacity:.7;font-size:.85rem;animation:godlabel 2s ease-in-out infinite;}
 
 /* ═══════════════════════════════════
    KEYFRAMES
@@ -171,24 +180,30 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
 @keyframes glow-galaxy{0%,100%{opacity:.78;filter:hue-rotate(0deg)}33%{opacity:1;filter:hue-rotate(45deg)}66%{opacity:.88;filter:hue-rotate(90deg)}}
 @keyframes glow-transcend{0%,100%{opacity:.85}50%{opacity:1}}
 @keyframes glow-god{0%,100%{opacity:.88;filter:hue-rotate(0deg)}20%{filter:hue-rotate(30deg);opacity:1}40%{filter:hue-rotate(60deg)}60%{filter:hue-rotate(90deg);opacity:1}80%{filter:hue-rotate(120deg)}}
-@keyframes ring-gold{0%,100%{opacity:.88}50%{opacity:1}}
-@keyframes ring-cosmic{0%,100%{opacity:.88;filter:hue-rotate(0deg)}50%{opacity:1;filter:hue-rotate(28deg)}}
-@keyframes ring-galaxy{0%,100%{opacity:.9;filter:hue-rotate(0deg)}33%{opacity:1;filter:hue-rotate(60deg)}66%{filter:hue-rotate(120deg)}}
-@keyframes ring-transcend{0%,100%{opacity:.92}50%{opacity:1}}
-@keyframes ring-god{0%,100%{filter:hue-rotate(0deg)}25%{filter:hue-rotate(45deg)}50%{filter:hue-rotate(90deg)}75%{filter:hue-rotate(135deg)}}
-@keyframes rays-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes crown-float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
-@keyframes crown-divine{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-50%) translateY(-8px) scale(1.1)}}
-@keyframes crown-god{
-  0%,100%{transform:translateX(-50%) translateY(0) scale(1);filter:drop-shadow(0 0 20px #ffff00) drop-shadow(0 0 40px #ff9800) hue-rotate(0deg);}
-  25%{transform:translateX(-50%) translateY(-10px) scale(1.15);filter:drop-shadow(0 0 28px #ff9800) drop-shadow(0 0 52px #ff6f00) hue-rotate(40deg);}
-  50%{transform:translateX(-50%) translateY(-5px) scale(1.08);filter:drop-shadow(0 0 24px #ff6f00) drop-shadow(0 0 48px #e91e63) hue-rotate(80deg);}
-  75%{transform:translateX(-50%) translateY(-12px) scale(1.18);filter:drop-shadow(0 0 32px #e91e63) drop-shadow(0 0 60px #9c27b0) hue-rotate(120deg);}
-}
+
+/* TIER 4+ NEW KEYFRAMES */
+@keyframes glow-thunder{0%,100%{opacity:.75;filter:hue-rotate(0deg) brightness(1)}50%{opacity:1;filter:hue-rotate(40deg) brightness(1.15)}}
+@keyframes ring-thunder{0%,100%{opacity:.85;box-shadow:0 0 0 3px rgba(66,165,245,.7),0 0 30px rgba(66,165,245,.5),0 0 60px rgba(138,180,255,.3)}50%{opacity:1;box-shadow:0 0 0 4px rgba(66,165,245,.9),0 0 45px rgba(66,165,245,.7),0 0 90px rgba(138,180,255,.5),0 0 120px rgba(255,235,59,.3)}}
+@keyframes rays-thunder{from{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.05)}to{transform:rotate(360deg) scale(1)}}
+@keyframes crown-thunder{0%,100%{transform:translateX(-50%) translateY(0) scale(1) rotate(0deg);filter:drop-shadow(0 0 12px #42a5f5)}50%{transform:translateX(-50%) translateY(-10px) scale(1.15) rotate(5deg);filter:drop-shadow(0 0 20px #1e88e5) drop-shadow(0 0 30px #0d47a1)}}
+
+@keyframes glow-rainbow{0%{opacity:.8;filter:hue-rotate(0deg)}25%{opacity:1;filter:hue-rotate(90deg)}50%{opacity:.85;filter:hue-rotate(180deg)}75%{opacity:1;filter:hue-rotate(270deg)}100%{opacity:.8;filter:hue-rotate(360deg)}}
+@keyframes ring-rainbow{0%{opacity:.85;filter:hue-rotate(0deg)}50%{opacity:1;filter:hue-rotate(180deg)}100%{opacity:.85;filter:hue-rotate(360deg)}}
+@keyframes img-rainbow{0%{filter:brightness(1.2) saturate(1.45) contrast(1.12) hue-rotate(0deg)}50%{filter:brightness(1.3) saturate(1.6) contrast(1.15) hue-rotate(180deg)}100%{filter:brightness(1.2) saturate(1.45) contrast(1.12) hue-rotate(360deg)}}
+@keyframes crown-rainbow{0%,100%{transform:translateX(-50%) translateY(0) scale(1);filter:drop-shadow(0 0 16px #ff0000) drop-shadow(0 0 24px #00ff00)}50%{transform:translateX(-50%) translateY(-12px) scale(1.2);filter:drop-shadow(0 0 24px #0000ff) drop-shadow(0 0 32px #ffff00) drop-shadow(0 0 40px #ff00ff)}}
+
+@keyframes glow-cosmos{0%,100%{opacity:.75;filter:hue-rotate(0deg)}33%{opacity:1;filter:hue-rotate(120deg)}66%{opacity:.85;filter:hue-rotate(240deg)}}
+@keyframes ring-cosmos{0%,100%{opacity:.88}50%{opacity:1}}
+@keyframes rays-cosmos{from{transform:rotate(0deg) scale(1)}33%{transform:rotate(120deg) scale(1.08)}66%{transform:rotate(240deg) scale(0.95)}to{transform:rotate(360deg) scale(1)}}
+@keyframes img-cosmos{0%,100%{filter:brightness(1.28) saturate(1.55) contrast(1.15) hue-rotate(0deg)}50%{filter:brightness(1.35) saturate(1.7) contrast(1.2) hue-rotate(45deg)}}
+@keyframes crown-cosmos{0%,100%{transform:translateX(-50%) translateY(0) scale(1);filter:drop-shadow(0 0 20px #ffffff) drop-shadow(0 0 30px #ba68c8)}50%{transform:translateX(-50%) translateY(-14px) scale(1.18);filter:drop-shadow(0 0 35px #673ab7) drop-shadow(0 0 50px #3f51b5) drop-shadow(0 0 65px #2196f3)}}
+
+@keyframes rays-god{from{transform:rotate(0deg) scale(1)}25%{transform:rotate(90deg) scale(1.1)}50%{transform:rotate(180deg) scale(0.95)}75%{transform:rotate(270deg) scale(1.05)}to{transform:rotate(360deg) scale(1)}}
 @keyframes img-god{
-  0%,100%{filter:brightness(1.4) saturate(1.8) contrast(1.15) hue-rotate(0deg);}
-  33%{filter:brightness(1.55) saturate(2) contrast(1.2) hue-rotate(12deg);}
-  66%{filter:brightness(1.45) saturate(1.9) contrast(1.17) hue-rotate(6deg);}
+  0%,100%{filter:brightness(1.35) saturate(1.6) contrast(1.18) hue-rotate(0deg);}
+  25%{filter:brightness(1.45) saturate(1.75) contrast(1.22) hue-rotate(15deg);}
+  50%{filter:brightness(1.4) saturate(1.7) contrast(1.2) hue-rotate(8deg);}
+  75%{filter:brightness(1.5) saturate(1.8) contrast(1.25) hue-rotate(22deg);}
 }
 @keyframes godlabel{
   0%,100%{text-shadow:0 0 18px #ff9800,0 0 36px #ff6f00;opacity:.92;}
@@ -322,11 +337,6 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
 
     <!-- ══ CHARACTER PANEL ══ -->
     <div class="panel cpanel" style="width:100%;">
-      <div class="stage-badge">
-        <span class="stag" id="stageTag">0단계</span>
-        <span class="sname" id="stageName">동네 할머니</span>
-      </div>
-
       <!-- Character frame -->
       <div class="cframe" id="cframe" data-tier="0">
         <div class="ov-rays" id="ovRays"></div>
@@ -339,6 +349,12 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
         <div class="ov-ring" id="ovRing"></div>
         <div class="ov-crown" id="ovCrown">♛</div>
         <div class="ov-godlabel" id="ovGodLabel">✦ 한영애신 ✦</div>
+      </div>
+
+      <!-- Name & Level above probability -->
+      <div class="stage-badge">
+        <span class="stag" id="stageTag">0단계</span>
+        <span class="sname" id="stageName">동네 할머니</span>
       </div>
 
       <!-- Probability -->
@@ -392,6 +408,14 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);
           <span class="sd">실패해도 단계 유지 · 1회 사용</span>
         </div>
         <button class="btn btn-buy" onclick="buyShield()">2M G</button>
+      </div>
+
+      <div class="shop-item">
+        <div class="sinfo">
+          <span class="sn">🛡️ 멘탈 보호권 x10</span>
+          <span class="sd">실패해도 단계 유지 · 10개 묶음</span>
+        </div>
+        <button class="btn btn-buy" onclick="buyShield10()">19.5M G</button>
       </div>
 
       <div class="shop-item">
@@ -558,10 +582,10 @@ function getTier(lv){
   if(lv<=3)  return 1;
   if(lv<=6)  return 2;
   if(lv<=9)  return 3;
-  if(lv<=12) return 4;
-  if(lv===13)return 5;
-  if(lv===14)return 6;
-  return 7;
+  if(lv<=10) return 4;   // 10강: 번개 효과 시작
+  if(lv<=12) return 5;   // 12강: 무지개 효과
+  if(lv<=14) return 6;   // 14강: 코스믹 효과
+  return 7;              // 15강: 신의 경지
 }
 
 // ════════════════════════════════════════
@@ -585,23 +609,30 @@ function buildParticles(tier){
   const c = document.getElementById('ovPts');
   c.innerHTML='';
   if(tier<2) return;
-  const counts=[0,0,8,14,20,26,34,50];
+  const counts=[0,0,10,16,24,32,42,60];
   const n = counts[tier]||0;
   const palettes={
     2:['rgba(255,152,0,.9)','rgba(255,193,7,.8)','rgba(255,235,59,.7)'],
     3:['rgba(255,235,59,.9)','rgba(255,255,150,.8)','rgba(255,193,7,.7)'],
-    4:['rgba(186,104,200,.9)','rgba(255,152,0,.8)','rgba(156,39,176,.7)'],
-    5:['rgba(103,58,183,.9)','rgba(0,150,136,.8)','rgba(63,81,181,.7)'],
-    6:['rgba(255,235,59,.9)','rgba(255,193,7,.8)','rgba(0,188,212,.7)'],
-    7:['rainbow'],
+    4:['rgba(66,165,245,.9)','rgba(138,180,255,.8)','rgba(30,136,176,.7)','rgba(255,235,59,.6)'], // 번개
+    5:['rainbow'], // 무지개
+    6:['rgba(255,255,255,.9)','rgba(186,104,200,.8)','rgba(103,58,183,.7)','rgba(63,81,181,.6)'], // 코스믹
+    7:['god'], // 신의 경지
   };
   const pal = palettes[tier]||palettes[2];
   for(let i=0;i<n;i++){
     const el = document.createElement('div');
     const x = Math.random()*100, y = Math.random()*100;
-    const sz = Math.random()*3+1.5;
-    const dl = Math.random()*4, dr = Math.random()*2+1.5;
-    const col = pal[0]==='rainbow'?`hsl(${Math.random()*360},100%,60%)`:pal[Math.floor(Math.random()*pal.length)];
+    const sz = tier>=5 ? Math.random()*4+2 : Math.random()*3+1.5;
+    const dl = Math.random()*4, dr = tier>=5 ? Math.random()*1.5+1 : Math.random()*2+1.5;
+    let col;
+    if(pal[0]==='rainbow'){
+      col=`hsl(${Math.random()*360},100%,60%)`;
+    }else if(pal[0]==='god'){
+      col=`hsl(${Math.random()*60},100%,${50+Math.random()*20}%)`;
+    }else{
+      col=pal[Math.floor(Math.random()*pal.length)];
+    }
     el.style.cssText=`position:absolute;left:${x}%;top:${y}%;width:${sz}px;height:${sz}px;
       border-radius:50%;background:${col};pointer-events:none;
       animation:sparkle-up ${dr}s ease-out ${dl}s infinite;`;
@@ -675,7 +706,7 @@ function render(){
 
   // Crown text by tier
   const crown = document.getElementById('ovCrown');
-  crown.textContent = tier<=1?'♛':tier<=2?'♛':tier<=4?'👑':tier<=5?'✨👑✨':tier<=6?'🌟👑🌟':'⭐👑⭐';
+  crown.textContent = tier<=1?'♛':tier<=2?'👑':tier<=3?'👑✨':tier<=4?'⚡👑⚡':tier<=5?'🌈👑🌈':tier<=6?'🌌👑🌌':'⭐👑⭐';
 
   save();
 }
@@ -751,6 +782,14 @@ function buyShield(){
   if(G.gold<cost){addLog(`❌ 골드 부족 (보유 ${fmt(G.gold)} / 필요 ${fmt(cost)})`,'fail');return;}
   G.gold-=cost; G.shields++;
   addLog(`🛡️ 멘탈 보호권 구매! 현재 ${G.shields}개 보유`,'info');
+  render();
+}
+
+function buyShield10(){
+  const cost=19500000;
+  if(G.gold<cost){addLog(`❌ 골드 부족 (보유 ${fmt(G.gold)} / 필요 ${fmt(cost)})`,'fail');return;}
+  G.gold-=cost; G.shields+=10;
+  addLog(`🛡️ 멘탈 보호권 x10 구매! 현재 ${G.shields}개 보유`,'info');
   render();
 }
 
